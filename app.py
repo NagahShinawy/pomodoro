@@ -3,7 +3,6 @@ created by Nagaj at 03/07/2021
 """
 
 from tkinter import *
-from tkinter import messagebox
 
 # from tkinter import messagebox
 
@@ -13,21 +12,14 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 1
-SHORT_BREAK_MIN = 1
-LONG_BREAK_MIN = 2
+WORK_MIN = 25
+SHORT_BREAK_MIN = 5
+LONG_BREAK_MIN = 20
 reps = 0
 timer = None
 
 
-def show_notification(msg):
-    messagebox.showinfo(title="test", message=msg)
-
-
 # ---------------------------- TIMER RESET ------------------------------- #
-
-# ---------------------------- TIMER MECHANISM ------------------------------- #
-
 def reset_timer():
     window.after_cancel(timer)
     canvas.itemconfig(timer_text, text="00:00")
@@ -35,6 +27,9 @@ def reset_timer():
     check_marks.config(text="")
     global reps
     reps = 0
+
+
+# ---------------------------- TIMER MECHANISM ------------------------------- #
 
 
 def start_timer():
@@ -68,10 +63,12 @@ def count_down(seconds):
     if seconds > 0:
         # wait 1 second then run function[count_down with params count - 1]
         global timer
-        timer = window.after(50, count_down, seconds - 1)
+        timer = window.after(1000, count_down, seconds - 1)
     else:
         start_timer()
-        work_sessions = reps // 2
+        work_sessions = (
+                reps // 2
+        )  # for every 2 repos means you completed 1 work session[1 rep work + 1 rep break]
         marks = ""
         for _ in range(work_sessions):
             marks += "✔"
