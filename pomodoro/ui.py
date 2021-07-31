@@ -1,7 +1,8 @@
 """
 created by Nagaj at 03/07/2021
 """
-from tkinter import Tk, Canvas, PhotoImage
+from tkinter import Tk, Canvas
+from PIL import ImageTk, Image
 
 
 class WindowWidget(Tk):
@@ -22,14 +23,17 @@ class WindowWidget(Tk):
         """
         self.title(title)
         canvas = Canvas(self, width=200, height=224)
-        canvas.grid(column=1, row=1)
+        # tomato = PhotoImage(file=img_path)
+        tomato = ImageTk.PhotoImage(Image.open("./static/tomato.png"))
+        canvas.create_image(100, 12, image=tomato)
+        canvas.pack()
         super().config(**kwargs)
         if is_center:
-            self.__center()
+            self.center()
         if image:
             self.iconbitmap(image)
 
-    def __center(self) -> None:
+    def center(self) -> None:
         """
         add window to the center of screen
         :return:
@@ -42,8 +46,10 @@ class WindowWidget(Tk):
 
     def add_canvas_image(self, w, h, x, y, img_path):
         canvas = Canvas(self, width=w, height=h)
-        tomato = PhotoImage(file=img_path)
+        # tomato = PhotoImage(file=img_path)
+        tomato = ImageTk.PhotoImage(Image.open(img_path))
         canvas.create_image(x, y, image=tomato)
+        canvas.pack()
 
     def run(self):
         """
